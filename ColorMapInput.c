@@ -15,16 +15,16 @@
 **This function reads in a file name colorfile.
 **It then uses the information in colorfile to create a color array, with each color represented by an int[3].
 ***************/
-uint8_t** FileToColorMap(char* colorfile, int* colorcount)
+int** FileToColorMap(char* colorfile, int* colorcount)
 {
     FILE *fp;
     fp = fopen(colorfile, "r");
     if(fp == NULL) return NULL;
 
     fscanf(fp, "%d", colorcount);
-    uint8_t **res = (uint8_t**) malloc((*colorcount)*sizeof(uint8_t*));
+    int **res = (int**) malloc((*colorcount)*sizeof(int*));
     for(int i=0; i<*colorcount; i++){
-        res[i] = (uint8_t*) malloc(3*sizeof(uint8_t));
+        res[i] = (int*) malloc(3*sizeof(int));
     }
     for(int i=0; i<*colorcount; i++){
         fscanf(fp, "%d %d %d", &res[i][0], &res[i][1], &res[i][2]);

@@ -21,11 +21,11 @@ int P3colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
 {
     if(width<1 || heightpercolor<1) return 1;
     int* colorcount = malloc(sizeof(int));
-    uint8_t** res;
+    int** res;
     res = FileToColorMap(colorfile,colorcount);
     FILE *fp;
     fp = fopen(outputfile, "w");
-    fprintf(fp, "%s %d %s %d\n", "P3", width, heightpercolor*(*colorcount), 255);
+    fprintf(fp, "%s %d %s %d\n", "P3", width, (*colorcount)*heightpercolor, 255);
     for (int i =0; i< (*colorcount);i++){
         for(int j=0; j<heightpercolor;j++){
             for(int k=0; k< width; k++){
