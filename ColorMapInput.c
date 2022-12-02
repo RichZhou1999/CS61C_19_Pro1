@@ -19,11 +19,12 @@ uint8_t** FileToColorMap(char* colorfile, int* colorcount)
 {
     FILE *fp;
     fp = fopen(colorfile, "r");
+    if(fp == NULL) return NULL;
 
     fscanf(fp, "%d", colorcount);
-    uint8_t **res = (int**) malloc((*colorcount)*sizeof(int*));
+    uint8_t **res = (uint8_t**) malloc((*colorcount)*sizeof(uint8_t*));
     for(int i=0; i<*colorcount; i++){
-        res[i] = (int*) malloc(3*sizeof(int));
+        res[i] = (uint8_t*) malloc(3*sizeof(uint8_t));
     }
     for(int i=0; i<*colorcount; i++){
         fscanf(fp, "%d %d %d", &res[i][0], &res[i][1], &res[i][2]);
