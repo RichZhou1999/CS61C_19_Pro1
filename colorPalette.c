@@ -63,7 +63,6 @@ int P6colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
                 }
             }
         }
-    }
 
     for(int i==0;i<(*colorcount);i++){
     free(res[i]);
