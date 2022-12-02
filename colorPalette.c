@@ -22,11 +22,11 @@ int P3colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
     if(width<1 || heightpercolor<1) return 1;
     int* colorcount = malloc(sizeof(int));
     uint8_t** res;
-    res = FileToColorMap(colorfile,colorcount)
+    res = FileToColorMap(colorfile,colorcount);
     FILE *fp;
     fp = fopen(outputfile, "w");
     fprintf(fp, "%s %d %s %d\n", "P3", width, heightpercolor*(*colorcount), 255);
-    for (int i =0; i< *colorcount;i++){
+    for (int i =0; i< (*colorcount);i++){
         for(int j=0; j<heightpercolor;j++){
             for(int k=0; k< width; k++){
                 fprintf(fp, "%d %d %d", res[i][0], res[i][1], res[i][2]);
@@ -52,19 +52,20 @@ int P6colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
     if(width<1 || heightpercolor<1) return 1;
     int* colorcount = malloc(sizeof(int));
     uint8_t** res;
-    res = FileToColorMap(colorfile,colorcount)
+    res = FileToColorMap(colorfile,colorcount);
     FILE *fp;
     fp = fopen(outputfile, "w");
     fprintf(fp, "%s %d %s %d\n", "P6", width, heightpercolor*(*colorcount), 255);
-    for (int i =0; i< *colorcount;i++){
-        for(int j=0; j<heightpercolor;j++){
+    for (int i =0; i< (*colorcount);i++){
+        for(int j=0; j< heightpercolor;j++){
             for(int k=0; k< width; k++){
                 fprintf(fp, "%c%c%c", res[i][0], res[i][1], res[i][2]);
                 }
             }
         }
     }
-    for(int i==0;i<*colorcount;i++){
+
+    for(int i==0;i<(*colorcount);i++){
     free(res[i]);
     }
     free(colorcount);
