@@ -33,7 +33,7 @@ int P3colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
                 if (k != width-1){
                     fprintf(fp, " ");
                 }
-                fprintf(out,"\n")
+                fprintf(out,"\n");
             }
         }
     }
