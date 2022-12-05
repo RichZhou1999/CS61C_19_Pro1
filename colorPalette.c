@@ -23,18 +23,18 @@ int P3colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
     int* colorcount = (int*)malloc(sizeof(int));
     int** in = FileToColorMap(colorfile, colorcount);
 //    in = FileToColorMap(colorfile, colorcount);
-    FILE *fp = fopen(outputfile, "w");
+    FILE *out = fopen(outputfile, "w");
 //    fp = fopen(outputfile, "w");
-    if(fp == NULL) return 1;
-    fprintf(fp, "%s %d %s %d\n", "P3", width, (*colorcount)*heightpercolor, 255);
+    if(out == NULL) return 1;
+    fprintf(out, "%s %d %s %d\n", "P3", width, (*colorcount)*heightpercolor, 255);
     for (int i =0; i< (*colorcount);i++){
         for(int j=0; j<heightpercolor;j++){
             for(int k=0; k< width; k++){
-                fprintf(fp, "%d %d %d", in[i][0], in[i][1], in[i][2]);
+                fprintf(out, "%d %d %d", in[i][0], in[i][1], in[i][2]);
                 if (k != width-1){
-                    fprintf(fp, " ");
+                    fprintf(out, " ");
                 }
-                fprintf(fp,"\n");
+                fprintf(out,"\n");
             }
         }
     }
@@ -94,13 +94,13 @@ int P6colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
     int* colorcount = malloc(sizeof(int));
     int** in =FileToColorMap(colorfile,colorcount);
 //    in = FileToColorMap(colorfile,colorcount);
-    FILE *fp = fopen(outputfile, "w");
+    FILE *out = fopen(outputfile, "w");
 //    fp = fopen(outputfile, "w");
-    fprintf(fp, "%s %d %s %d\n", "P6", width, heightpercolor*(*colorcount), 255);
+    fprintf(out, "%s %d %s %d\n", "P6", width, heightpercolor*(*colorcount), 255);
     for (int i =0; i< (*colorcount);i++){
         for(int j=0; j< heightpercolor;j++){
             for(int k=0; k< width; k++){
-                fprintf(fp, "%c%c%c", in[i][0], in[i][1], in[i][2]);
+                fprintf(out, "%c%c%c", in[i][0], in[i][1], in[i][2]);
                 }
             }
         }
@@ -118,7 +118,7 @@ int P6colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
 //    printf("%d",*colorcount);
 //    free(colorcount);
 //    free(in);
-    fclose(fp);
+    fclose(out);
     //YOUR CODE HERE
 	return 0;
 }
