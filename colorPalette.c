@@ -25,6 +25,7 @@ int P3colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
     in = FileToColorMap(colorfile, colorcount);
     FILE *fp;
     fp = fopen(outputfile, "w");
+    if(fp == NULL) return 1;
     fprintf(fp, "%s %d %s %d\n", "P3", width, (*colorcount)*heightpercolor, 255);
     for (int i =0; i< (*colorcount);i++){
         for(int j=0; j<heightpercolor;j++){
@@ -37,11 +38,19 @@ int P3colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
             }
         }
     }
-    for(int i=0;i<(*colorcount);i++){
+
+    for(int i=0; i<(*colorcount); i++){
         free(in[i]);
     }
-    free(colorcount);
     free(in);
+    printf("%d",*colorcount)
+    free(colorcount);
+
+//    for(int i=0;i<(*colorcount);i++){
+//        free(in[i]);
+//    }
+//    free(colorcount);
+//    free(in);
     fclose(fp);
     //YOUR CODE HERE
 	return 0;
@@ -83,7 +92,7 @@ int P6colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
 {
     if(width<1 || heightpercolor<1) return 1;
     int* colorcount = malloc(sizeof(int));
-    uint8_t** in;
+    int** in;
     in = FileToColorMap(colorfile,colorcount);
     FILE *fp;
     fp = fopen(outputfile, "w");
@@ -99,6 +108,7 @@ int P6colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
     for(int i=0;i< (*colorcount);i++){
         free(in[i]);
     }
+    printf("%d",*colorcount)
     free(colorcount);
     free(in);
     fclose(fp);
