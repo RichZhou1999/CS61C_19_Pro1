@@ -39,7 +39,7 @@ int P3colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
         }
     }
 
-    for(int i=0; i<(*100); i++){
+    for(int i=0; i<(100); i++){
         free(in[i]);
     }
     free(in);
@@ -106,7 +106,7 @@ int P6colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
         }
 
 
-    for(int i=0; i<(*200); i++){
+    for(int i=0; i<(200); i++){
         free(in[i]);
     }
     free(in);
