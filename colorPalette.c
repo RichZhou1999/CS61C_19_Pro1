@@ -17,124 +17,124 @@ void usage(char* argv[])
 }
 
 ////Creates a color palette image for the given colorfile in outputfile. Width and heightpercolor dictates the dimensions of each color. Output should be in P3 format
-//int P3colorpalette(char* colorfile, int width, int heightpercolor, char* outputfile)
-//{
-//    if(width<1 || heightpercolor<1) return 1;
-//    int* colorcount = (int*)malloc(sizeof(int));
-//    int** res;
-//    res = FileToColorMap(colorfile, colorcount);
-//    FILE *fp;
-//    fp = fopen(outputfile, "w");
-//    fprintf(fp, "%s %d %s %d\n", "P3", width, (*colorcount)*heightpercolor, 255);
-//    for (int i =0; i< (*colorcount);i++){
-//        for(int j=0; j<heightpercolor;j++){
-//            for(int k=0; k< width; k++){
-//                fprintf(fp, "%d %d %d", res[i][0], res[i][1], res[i][2]);
-//                if (k != width-1){
-//                    fprintf(fp, " ");
-//                }
-//                fprintf(fp,"\n");
-//            }
-//        }
-//    }
-//    for(int i=0;i<(*colorcount);i++){
-//        free(res[i]);
-//    }
-//    free(colorcount);
-//    free(res);
-//    fclose(fp);
-//    //YOUR CODE HERE
-//	return 0;
-//}
-
 int P3colorpalette(char* colorfile, int width, int heightpercolor, char* outputfile)
 {
-    //YOUR CODE HERE
     if(width<1 || heightpercolor<1) return 1;
-    int *colorcount = (int*)malloc(sizeof(int));
-    int** in = FileToColorMap(colorfile, colorcount);
-
-    FILE *out = fopen(outputfile, "w");
-    if(out == NULL) return 1;
-    fprintf(out, "P3 %d %d 255\n", width, (*colorcount)*heightpercolor);
-    for(int i=0; i<(*colorcount); i++){
-        for(int j=0; j<heightpercolor; j++){
-            for(int k=0; k<width; k++){
-                fprintf(out, "%d %d %d", in[i][0], in[i][1], in[i][2]);
-                if(k != width-1) fprintf(out, " "); //add space
+    int* colorcount = (int*)malloc(sizeof(int));
+    int** in;
+    in = FileToColorMap(colorfile, colorcount);
+    FILE *fp;
+    fp = fopen(outputfile, "w");
+    fprintf(fp, "%s %d %s %d\n", "P3", width, (*colorcount)*heightpercolor, 255);
+    for (int i =0; i< (*colorcount);i++){
+        for(int j=0; j<heightpercolor;j++){
+            for(int k=0; k< width; k++){
+                fprintf(fp, "%d %d %d", in[i][0], in[i][1], in[i][2]);
+                if (k != width-1){
+                    fprintf(fp, " ");
+                }
+                fprintf(fp,"\n");
             }
-            fprintf(out, "\n"); //go to next line
         }
     }
-
-    // free
-    for(int i=0; i<(*colorcount); i++){
+    for(int i=0;i<(*colorcount);i++){
         free(in[i]);
     }
-    free(in);
     free(colorcount);
-
-    fclose(out);
-    return 0;
+    free(in);
+    fclose(fp);
+    //YOUR CODE HERE
+	return 0;
 }
 
-//Same as above, but with P6 format
-//int P6colorpalette(char* colorfile, int width, int heightpercolor, char* outputfile)
+//int P3colorpalette(char* colorfile, int width, int heightpercolor, char* outputfile)
 //{
-//    if(width<1 || heightpercolor<1) return 1;
-//    int* colorcount = malloc(sizeof(int));
-//    uint8_t** res;
-//    res = FileToColorMap(colorfile,colorcount);
-//    FILE *fp;
-//    fp = fopen(outputfile, "w");
-//    fprintf(fp, "%s %d %s %d\n", "P6", width, heightpercolor*(*colorcount), 255);
-//    for (int i =0; i< (*colorcount);i++){
-//        for(int j=0; j< heightpercolor;j++){
-//            for(int k=0; k< width; k++){
-//                fprintf(fp, "%c%c%c", res[i][0], res[i][1], res[i][2]);
-//                }
-//            }
-//        }
-//
-//    for(int i=0;i< (*colorcount);i++){
-//        free(res[i]);
-//    }
-//    free(colorcount);
-//    free(res);
-//    fclose(fp);
 //    //YOUR CODE HERE
-//	return 0;
+//    if(width<1 || heightpercolor<1) return 1;
+//    int *colorcount = (int*)malloc(sizeof(int));
+//    int** in = FileToColorMap(colorfile, colorcount);
+//
+//    FILE *out = fopen(outputfile, "w");
+//    if(out == NULL) return 1;
+//    fprintf(out, "P3 %d %d 255\n", width, (*colorcount)*heightpercolor);
+//    for(int i=0; i<(*colorcount); i++){
+//        for(int j=0; j<heightpercolor; j++){
+//            for(int k=0; k<width; k++){
+//                fprintf(out, "%d %d %d", in[i][0], in[i][1], in[i][2]);
+//                if(k != width-1) fprintf(out, " "); //add space
+//            }
+//            fprintf(out, "\n"); //go to next line
+//        }
+//    }
+//
+//    // free
+//    for(int i=0; i<(*colorcount); i++){
+//        free(in[i]);
+//    }
+//    free(in);
+//    free(colorcount);
+//
+//    fclose(out);
+//    return 0;
 //}
 
-
+//Same as above, but with P6 format
 int P6colorpalette(char* colorfile, int width, int heightpercolor, char* outputfile)
 {
-    //YOUR CODE HERE
-    if(width < 1 || heightpercolor < 1) return 1;
-    int *colorcount = (int*)malloc(sizeof(int));
-    int **in = FileToColorMap(colorfile, colorcount);
-
-    FILE *out = fopen(outputfile, "w");
-    if(out == NULL) return 1;
-    fprintf(out, "P6 %d %d 255\n", width, (*colorcount)*heightpercolor);
-    for(int i=0; i<(*colorcount); i++){
-        for(int j=0; j<heightpercolor; j++){
-            for(int k=0; k<width; k++){
-                fprintf(out, "%c%c%c", in[i][0], in[i][1], in[i][2]);
+    if(width<1 || heightpercolor<1) return 1;
+    int* colorcount = malloc(sizeof(int));
+    uint8_t** in;
+    in = FileToColorMap(colorfile,colorcount);
+    FILE *fp;
+    fp = fopen(outputfile, "w");
+    fprintf(fp, "%s %d %s %d\n", "P6", width, heightpercolor*(*colorcount), 255);
+    for (int i =0; i< (*colorcount);i++){
+        for(int j=0; j< heightpercolor;j++){
+            for(int k=0; k< width; k++){
+                fprintf(fp, "%c%c%c", in[i][0], in[i][1], in[i][2]);
+                }
             }
         }
-    }
 
-    // free
-    for(int i=0; i<(*colorcount); i++){
+    for(int i=0;i< (*colorcount);i++){
         free(in[i]);
     }
-    free(in);
     free(colorcount);
-
-    fclose(out);
-    return 0;
+    free(in);
+    fclose(fp);
+    //YOUR CODE HERE
+	return 0;
 }
+
+
+//int P6colorpalette(char* colorfile, int width, int heightpercolor, char* outputfile)
+//{
+//    //YOUR CODE HERE
+//    if(width < 1 || heightpercolor < 1) return 1;
+//    int *colorcount = (int*)malloc(sizeof(int));
+//    int **in = FileToColorMap(colorfile, colorcount);
+//
+//    FILE *out = fopen(outputfile, "w");
+//    if(out == NULL) return 1;
+//    fprintf(out, "P6 %d %d 255\n", width, (*colorcount)*heightpercolor);
+//    for(int i=0; i<(*colorcount); i++){
+//        for(int j=0; j<heightpercolor; j++){
+//            for(int k=0; k<width; k++){
+//                fprintf(out, "%c%c%c", in[i][0], in[i][1], in[i][2]);
+//            }
+//        }
+//    }
+//
+//    // free
+//    for(int i=0; i<(*colorcount); i++){
+//        free(in[i]);
+//    }
+//    free(in);
+//    free(colorcount);
+//
+//    fclose(out);
+//    return 0;
+//}
 
 
 
