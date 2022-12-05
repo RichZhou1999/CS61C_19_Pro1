@@ -51,7 +51,7 @@ int P3colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
 //    }
 //    free(colorcount);
 //    free(in);
-    fclose(fp);
+    fclose(out);
     //YOUR CODE HERE
 	return 0;
 }
