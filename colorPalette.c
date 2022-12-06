@@ -110,13 +110,20 @@ int P6colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
     FILE *out = fopen(outputfile, "w");
 //    fp = fopen(outputfile, "w");
     fprintf(out, "%s %d %s %d\n", "P6", width, heightpercolor*(*colorcount), 255);
-    for (int i =0; i< (*colorcount);i++){
-        for(int j=0; j< heightpercolor;j++){
-            for(int k=0; k< width; k++){
+//    for (int i =0; i< (*colorcount);i++){
+//        for(int j=0; j< heightpercolor;j++){
+//            for(int k=0; k< width; k++){
+//                fprintf(out, "%c%c%c", in[i][0], in[i][1], in[i][2]);
+//                }
+//            }
+//        }
+    for(int i=0; i<(*colorcount); i++){
+        for(int j=0; j<heightpercolor; j++){
+            for(int k=0; k<width; k++){
                 fprintf(out, "%c%c%c", in[i][0], in[i][1], in[i][2]);
-                }
             }
         }
+    }
 
 
     for(int i=0; i<(*colorcount); i++){
