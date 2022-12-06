@@ -27,17 +27,30 @@ int P3colorpalette(char* colorfile, int width, int heightpercolor, char* outputf
 //    fp = fopen(outputfile, "w");
     if(out == NULL) return 1;
     fprintf(out, "%s %d %s %d\n", "P3", width, (*colorcount)*heightpercolor, 255);
-    for (int i =0; i< (*colorcount);i++){
-        for(int j=0; j<heightpercolor;j++){
-            for(int k=0; k< width; k++){
+
+//    for (int i =0; i< (*colorcount);i++){
+//        for(int j=0; j<heightpercolor;j++){
+//            for(int k=0; k< width; k++){
+//                fprintf(out, "%d %d %d", in[i][0], in[i][1], in[i][2]);
+//                if (k != width-1){
+//                    fprintf(out, " ");
+//                }
+//                fprintf(out,"\n");
+//            }
+//        }
+//    }
+
+    for(int i=0; i<(*colorcount); i++){
+        for(int j=0; j<heightpercolor; j++){
+            for(int k=0; k<width; k++){
                 fprintf(out, "%d %d %d", in[i][0], in[i][1], in[i][2]);
-                if (k != width-1){
-                    fprintf(out, " ");
-                }
-                fprintf(out,"\n");
+                if(k != width-1) fprintf(out, " "); //add space
             }
+            fprintf(out, "\n"); //go to next line
         }
     }
+
+
 
     for(int i=0; i<(*colorcount); i++){
         free(in[i]);
