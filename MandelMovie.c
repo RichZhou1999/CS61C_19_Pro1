@@ -235,31 +235,33 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    int *colorcount = (int*)malloc(sizeof(int));
+    int **colormap = FileToColorMap(argv[10], colorcount);
 
-    char* output_folder = argv[9];
-    char* colorfile = argv[10];
 
-    int len = 2*resolution + 1;
+    //STEP 2: Run MandelMovie on the correct arguments.
+    /*
+    MandelMovie requires an output array, so make sure you allocate the proper amount of space.
+    If allocation fails, free all the space you have already allocated (including colormap), then return with exit code 1.
+    */
 
+    //YOUR CODE HERE
+    int len = 2 * resolution + 1;
     long **output;
-    output = (long**)malloc(sizeof(long*) * framecount);
-    for (int i=0;i<framecount;i++){
-        output[i] = (long*)malloc(len*len*sizeof(long));
+    output = (long**)malloc(framecount * sizeof(long*));
+    if(output == NULL){
+        printf("Unable to allocate **output\n");
+        return 1;
     }
-    int* colorcount = malloc(sizeof(int));
+    for(int i=0; i<framecount; i++){
+        output[i] = (long*)malloc(sizeof(long) * len * len);
+        if(output[i] == NULL){
+            printf("Unable to malloc \n");
+            return 1;
+        }
+    }
 
-    int** colormap;
-    colormap = FileToColorMap(colorfile, colorcount);
-
-
-    MandelMovie(threshold,
-                max_iterations,
-                center,
-                initialscale,
-                finalscale,
-                framecount,
-                resolution,
-                output);
+    MandelMovie(threshold, max_iterations, center, initialscale, finalscale, framecount, resolution, output);
 
 //    int* color_count_pointer = malloc(sizeof(int));
 //
