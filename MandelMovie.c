@@ -63,7 +63,8 @@ int main(int argc, char* argv[])
     int max_iterations = (long)atof(argv[2]);
     double center_real = atof(argv[3]);
     double center_imaginary = atof(argv[4]);
-    ComplexNumber* center = newComplexNumber(center_real,center_imaginary);
+    ComplexNumber* center;
+    center = newComplexNumber(center_real, center_imaginary);
     double initialscale = atof(argv[5]);
     double finalscale = atof(argv[6]);
 
