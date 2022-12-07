@@ -235,7 +235,7 @@ int main(int argc, char* argv[])
     int len = 2*resolution + 1;
 
     long **output;
-    output = (long)malloc(sizeof(long*) * framecount);
+    output = (**long)malloc(sizeof(long*) * framecount);
     for (int i=0;i<framecount;i++){
         output[i] = (long*)malloc(len*len*sizeof(long));
     }
@@ -244,15 +244,6 @@ int main(int argc, char* argv[])
 
     int** colormap;
     colormap = FileToColorMap(colorfile, colorcount);
-
-
-    int len = 2*resolution + 1;
-
-    long **output;
-    output = (long**)malloc(sizeof(long*) * framecount);
-    for (int i=0;i<framecount;i++){
-        output[i] = (long*)malloc(len*len*sizeof(long));
-    }
 
 
     MandelMovie(threshold,
