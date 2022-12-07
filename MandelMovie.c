@@ -29,8 +29,8 @@ As another example, if initialscale=10, finalscale=0.01, framecount=5, then your
 */
 void MandelMovie(double threshold, u_int64_t max_iterations, ComplexNumber* center, double initialscale, double finalscale, int framecount, u_int64_t resolution, u_int64_t ** output){
     if(framecount == 1) {
-        Mandelbrot(threshold, max_iterations, center, initialscale, resolution, output[i]);
-        return
+        Mandelbrot(threshold, max_iterations, center, initialscale, resolution, output[0]);
+        return;
     }
     double ratio = pow((finalscale/initialscale),1/(framecount-1));
     double temp_scale;
@@ -57,41 +57,41 @@ int main(int argc, char* argv[])
 	Remember to use your solution to B.1.1 to process colorfile.
 	*/
     if(argc!=11){
-        return 1
+        return 1;
     }
-    double threshold = argv[1];
-    int maxiterations = argv[2];
-    double center_real =argv[3];
-    double center_imaginary = argv[4];
+    double threshold = atof(argv[1]);
+    int maxiterations = (long)atof(argv[2]);
+    double center_real = atof(argv[3]);
+    double center_imaginary = atof(argv[4]);
     ComplexNumber* center = newComplexNumber(center_real,center_imaginary);
-    double initialscale = argv[5];
-    double finalscale = argv[6];
+    double initialscale = atof(argv[5]);
+    double finalscale = atof(argv[6]);
 
     if (finalscale < initialscale){
         return 1;
     }
-    int framecount = argv[7];
+    int framecount = (long)atof(argv[7]);
     if(framecount <= 0){
         return 1;
     }
-    u_int64_t resolution = argv[8];
+    u_int64_t resolution = (long)atof(argv[8]);
 
     char* output_folder = argv[9];
     char* colorfile = argv[10];
     u_int64_t **output;
-    output = malloc(sizeof(u_int64_t (*output))* framecount);
+    output = malloc(sizeof(u_int64_t*) * framecount);
     for (int i=0;i<framecount;i++){
         output[i] = malloc((2*resolution+1)*(2*resolution+1)*sizeof(u_int64_t));
     }
 
-    MandelMovie(double threshold,
-                u_int64_t max_iterations,
-                ComplexNumber* center,
-                double initialscale,
-                double finalscale,
-                int framecount,
-                u_int64_t resolution,
-                u_int64_t  output);
+    MandelMovie(threshold,
+                max_iterations,
+                center,
+                initialscale,
+                finalscale,
+                framecount,
+                resolution,
+                output);
 
     int* color_count_pointer = malloc(sizeof(int));
 
@@ -104,8 +104,8 @@ int main(int argc, char* argv[])
 //            res[i][j] = colormap
 //        }
 //    }
-    int len = 2*resolution + 1
-    for (int i=0;i<framecount;i++){
+    int len = 2*resolution + 1;
+    for (int i=0; i<framecount;i++){
         char a[35];
         sprintf(a,"%s/frame%05d.ppm", argv[9], i);
         FILE *out = fopen(a, "w");
