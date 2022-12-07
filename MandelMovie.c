@@ -96,6 +96,11 @@ void MandelMovie(double threshold, u_int64_t max_iterations, ComplexNumber* cent
 //    char* output_folder = argv[9];
 //    char* colorfile = argv[10];
 //
+//    int* colorcount = malloc(sizeof(int));
+//
+//    int** colormap;
+//    colormap = FileToColorMap(colorfile, colorcount);
+//
 //    int len = 2*resolution + 1;
 //    long **output;
 //    output = (long)malloc(sizeof(long*) * framecount);
@@ -103,10 +108,6 @@ void MandelMovie(double threshold, u_int64_t max_iterations, ComplexNumber* cent
 //        output[i] = (long*)malloc(len*len*sizeof(long));
 //    }
 //
-//    int* colorcount = malloc(sizeof(int));
-//
-//    int** colormap;
-//    colormap = FileToColorMap(colorfile, colorcount);
 //
 //    MandelMovie(threshold,
 //                max_iterations,
@@ -192,7 +193,7 @@ void MandelMovie(double threshold, u_int64_t max_iterations, ComplexNumber* cent
 //
 //	return 0;
 //}
-
+//
 
 
 
@@ -208,52 +209,72 @@ int main(int argc, char* argv[])
     Check the spec for examples of invalid inputs.
     Remember to use your solution to B.1.1 to process colorfile.
     */
-    if(argc!=11){
+    if(argc != 11) {
+        printf("%s: Wrong number of arguments, expecting 7\n", argv[0]);
+        printUsage(argv);
         return 1;
     }
-    double threshold = atof(argv[1]);
-    int max_iterations = (long)atof(argv[2]);
-    double center_real = atof(argv[3]);
-    double center_imaginary = atof(argv[4]);
+    double threshold,initialscale, finalscale;
+    int framecount;
     ComplexNumber* center;
-    center = newComplexNumber(center_real, center_imaginary);
-    double initialscale = atof(argv[5]);
-    double finalscale = atof(argv[6]);
+    long max_iterations, resolution;
 
-    if (finalscale < initialscale){
+    threshold = atof(argv[1]);
+    max_iterations = (long)atoi(argv[2]);
+    center = newComplexNumber(atof(argv[3]), atof(argv[4]));
+    initialscale = atof(argv[5]);
+    finalscale = atof(argv[6]);
+    framecount = (int)atoi(argv[7]);
+    resolution = (long)atoi(argv[8]);
+
+    if(threshold <= 0 || initialscale <= 0 || finalscale <= 0 || max_iterations <= 0){
+        printf("The threshold, initscale, finalscale, max_iterations must be > 0\n");
+        printUsage(argv);
         return 1;
     }
-    int framecount = (int)atof(argv[7]);
-    if(framecount <= 0){
+    if(resolution < 0){
+        printf("The resolution must be >= 0\n");
+        printUsage(argv);
         return 1;
     }
-    long resolution = (long)atof(argv[8]);
+    if(framecount > 10000 || framecount <= 0){
+        printf("The framecount must in the range of (0, 10000)\n");
+        printUsage(argv);
+        return 1;
+    }
+    if(framecount == 1 && initialscale != finalscale){
+        printf("The framecount is not 1\n");
+        printUsage(argv);
+        return 1;
+    }
+    //get the colormap and color num
+    int *colorcount = (int*)malloc(sizeof(int));
+    int **colormap = FileToColorMap(argv[10], colorcount);
 
-    char* output_folder = argv[9];
-    char* colorfile = argv[10];
 
-    int len = 2*resolution + 1;
+    //STEP 2: Run MandelMovie on the correct arguments.
+    /*
+    MandelMovie requires an output array, so make sure you allocate the proper amount of space.
+    If allocation fails, free all the space you have already allocated (including colormap), then return with exit code 1.
+    */
 
+    //YOUR CODE HERE
+    int len = 2 * resolution + 1;
     long **output;
-    output = (long**)malloc(sizeof(long*) * framecount);
-    for (int i=0;i<framecount;i++){
-        output[i] = (long*)malloc(len*len*sizeof(long));
+    output = (long**)malloc(framecount * sizeof(long*));
+    if(output == NULL){
+        printf("Unable to allocate **output\n");
+        return 1;
+    }
+    for(int i=0; i<framecount; i++){
+        output[i] = (long*)malloc(sizeof(long) * len * len);
+        if(output[i] == NULL){
+            printf("Unable to malloc \n");
+            return 1;
+        }
     }
 
-    int* colorcount = malloc(sizeof(int));
-
-    int** colormap;
-    colormap = FileToColorMap(colorfile, colorcount);
-
-
-    MandelMovie(threshold,
-                max_iterations,
-                center,
-                initialscale,
-                finalscale,
-                framecount,
-                resolution,
-                output);
+    MandelMovie(threshold, max_iterations, center, initialscale, finalscale, framecount, resolution, output);
 
 //    int* color_count_pointer = malloc(sizeof(int));
 //
