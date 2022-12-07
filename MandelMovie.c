@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
         return 1;
     }
     double threshold = atof(argv[1]);
-    int maxiterations = (long)atof(argv[2]);
+    int max_iterations = (long)atof(argv[2]);
     double center_real = atof(argv[3]);
     double center_imaginary = atof(argv[4]);
     ComplexNumber* center = newComplexNumber(center_real,center_imaginary);
@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
 
     int* color_count_pointer = malloc(sizeof(int));
 
-    uint8_t** colormap;
+    int** colormap;
     colormap = FileToColorMap(colorfile, color_count_pointer);
 //    P3colorpalette(colorfile, int width, int heightpercolor, char* outputfile);
 //    uint8_t** res;
@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
             if(output[i][m] == 0){
                 fprintf(out, "%c%c%c", 0, 0, 0);
             } else {
-                int index = ((int)output[i][m]-1) % (*colorcount);
+                int index = ((int)output[i][m]-1) % (*color_count_pointer);
                 fprintf(out, "%c%c%c", colormap[index][0], colormap[index][1], colormap[index][2]);
             }
         }
@@ -124,7 +124,9 @@ int main(int argc, char* argv[])
     for (int i=0;i<framecount;i++){
         free(output[i]);
     }
-
+    for (int i=0; i< *color_count_pointer;i++){
+        free(colormap[i]);
+    }
     free(output);
     free(colormap);
     free(color_count_pointer);
