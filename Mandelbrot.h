@@ -13,7 +13,7 @@
 This function returns the number of iterations that cause the initial point to exceed the threshold.
 If the threshold is not exceeded after maxiters, the function returns maxiters.
 */
-u_int64_t MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold);
+long MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold);
 
 /*
 This function calculates the Mandelbrot plot and stores the result in output.
