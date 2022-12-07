@@ -20,7 +20,7 @@ typedef struct ComplexNumber
 ComplexNumber* newComplexNumber(double real_component, double imaginary_component)
 {
     //YOUR CODE HERE
-    ComplexNumber* complexNumberPointer = malloc(sizeof(ComplexNumber));
+    ComplexNumber* complexNumberPointer = (ComplexNumber*)malloc(sizeof(ComplexNumber));
     complexNumberPointer -> real = real_component;
     complexNumberPointer -> imaginary = imaginary_component;
 
@@ -30,7 +30,7 @@ ComplexNumber* newComplexNumber(double real_component, double imaginary_componen
 //Returns a pointer to a new Complex Number equal to a*b
 ComplexNumber* ComplexProduct(ComplexNumber* a, ComplexNumber* b)
 {
-    ComplexNumber* complexNumberPointer = malloc(sizeof(ComplexNumber));
+    ComplexNumber* complexNumberPointer = (ComplexNumber*)malloc(sizeof(ComplexNumber));
     complexNumberPointer->real = a->real * b->real - a->imaginary * b->imaginary;
     complexNumberPointer->imaginary = a->real * b->imaginary + a->imaginary * b->real;
     return complexNumberPointer;
@@ -39,7 +39,7 @@ ComplexNumber* ComplexProduct(ComplexNumber* a, ComplexNumber* b)
 //Returns a pointer to a new Complex Number equal to a+b
 ComplexNumber* ComplexSum(ComplexNumber* a, ComplexNumber* b)
 {
-    ComplexNumber* complexNumberPointer = malloc(sizeof(ComplexNumber));
+    ComplexNumber* complexNumberPointer = (ComplexNumber*)malloc(sizeof(ComplexNumber));
     complexNumberPointer->real = a->real + b->real;
     complexNumberPointer->imaginary = b->imaginary + b->imaginary;
     return complexNumberPointer;
