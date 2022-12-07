@@ -182,156 +182,6 @@ void MandelMovie(double threshold, u_int64_t max_iterations, ComplexNumber* cent
 
 
 
-int main(int argc, char* argv[])
-{
-    //Tips on how to get started on main function:
-    //MandelFrame also follows a similar sequence of steps; it may be useful to reference that.
-    //Mayke you complete the steps below in order.
-
-    //STEP 1: Convert command line inputs to local variables, and ensure that inputs are valid.
-    /*
-    Check the spec for examples of invalid inputs.
-    Remember to use your solution to B.1.1 to process colorfile.
-    */
-    if(argc != 11) {
-        printf("%s: Wrong number of arguments, expecting 7\n", argv[0]);
-        printUsage(argv);
-        return 1;
-    }
-    double threshold,initialscale, finalscale;
-    int framecount;
-    ComplexNumber* center;
-    long max_iterations, resolution;
-
-    threshold = atof(argv[1]);
-    max_iterations = (long)atoi(argv[2]);
-    center = newComplexNumber(atof(argv[3]), atof(argv[4]));
-    initialscale = atof(argv[5]);
-    finalscale = atof(argv[6]);
-    framecount = (int)atoi(argv[7]);
-    resolution = (long)atoi(argv[8]);
-
-    if(threshold <= 0 || initialscale <= 0 || finalscale <= 0 || max_iterations <= 0){
-        printf("The threshold, initscale, finalscale, max_iterations must be > 0\n");
-        printUsage(argv);
-        return 1;
-    }
-    if(resolution < 0){
-        printf("The resolution must be >= 0\n");
-        printUsage(argv);
-        return 1;
-    }
-    if(framecount > 10000 || framecount <= 0){
-        printf("The framecount must in the range of (0, 10000)\n");
-        printUsage(argv);
-        return 1;
-    }
-    if(framecount == 1 && initialscale != finalscale){
-        printf("The framecount is not 1\n");
-        printUsage(argv);
-        return 1;
-    }
-    //get the colormap and color num
-    int *colorcount = (int*)malloc(sizeof(int));
-    int **colormap = FileToColorMap(argv[10], colorcount);
-
-
-
-    int len = 2*resolution + 1;
-    long **output;
-    output = (long)malloc(sizeof(long*) * framecount);
-    for (int i=0;i<framecount;i++){
-        output[i] = (long*)malloc(len*len*sizeof(long));
-    }
-
-    MandelMovie(threshold,
-                max_iterations,
-                center,
-                initialscale,
-                finalscale,
-                framecount,
-                resolution,
-                output);
-
-//    int* color_count_pointer = malloc(sizeof(int));
-//
-//    int** colormap;
-//    colormap = FileToColorMap(colorfile, color_count_pointer);
-//    P3colorpalette(colorfile, int width, int heightpercolor, char* outputfile);
-//    uint8_t** res;
-//    for(int i =0; i< framecount;i++){
-//        for (int j=0; j<(2*resolution+1)*(2*resolution+1);j++){
-//            res[i][j] = colormap
-//        }
-//    }
-    for (int i=0; i<framecount;i++){
-        char a[35];
-        sprintf(a,"%s/frame%05d.ppm", argv[9], i);
-        FILE *out = fopen(a, "w");
-        fprintf(out, "P6 %d %d 255\n", len, len);
-        for(int m=0; m<len*len; m++){
-            if(output[i][m] == 0){
-                fprintf(out, "%c%c%c", 0, 0, 0);
-            } else {
-                int index = ((int)output[i][m]-1) % (*colorcount);
-                fprintf(out, "%c%c%c", colormap[index][0], colormap[index][1], colormap[index][2]);
-            }
-        }
-    }
-
-
-    for (int i=0;i<framecount;i++){
-        free(output[i]);
-    }
-    for (int i=0; i<(*colorcount);i++){
-        free(colormap[i]);
-    }
-
-    free(output);
-    free(colormap);
-    free(colorcount);
-    free(center);
-    //YOUR CODE HERE
-
-
-
-
-    //STEP 2: Run MandelMovie on the correct arguments.
-    /*
-    MandelMovie requires an output array, so make sure you allocate the proper amount of space.
-    If allocation fails, free all the space you have already allocated (including colormap), then return with exit code 1.
-    */
-
-    //YOUR CODE HERE
-
-
-
-    //STEP 3: Output the results of MandelMovie to .ppm files.
-    /*
-    Convert from iteration count to colors, and output the results into output files.
-    Use what we showed you in Part B.1.2, create a seqeunce of ppm files in the output folder.
-    Feel free to create your own helper function to complete this step.
-    As a reminder, we are using P6 format, not P3.
-    */
-
-    //YOUR CODE HERE
-
-
-
-
-    //STEP 4: Free all allocated memory
-    /*
-    Make sure there's no memory leak.
-    */
-    //YOUR CODE HERE
-
-
-
-
-
-    return 0;
-}
-
 //int main(int argc, char* argv[])
 //{
 //    //Tips on how to get started on main function:
@@ -343,8 +193,6 @@ int main(int argc, char* argv[])
 //    Check the spec for examples of invalid inputs.
 //    Remember to use your solution to B.1.1 to process colorfile.
 //    */
-//
-//    //YOUR CODE HERE
 //    if(argc != 11) {
 //        printf("%s: Wrong number of arguments, expecting 7\n", argv[0]);
 //        printUsage(argv);
@@ -388,6 +236,66 @@ int main(int argc, char* argv[])
 //    int **colormap = FileToColorMap(argv[10], colorcount);
 //
 //
+//
+//    int len = 2*resolution + 1;
+//    long **output;
+//    output = (long)malloc(sizeof(long*) * framecount);
+//    for (int i=0;i<framecount;i++){
+//        output[i] = (long*)malloc(len*len*sizeof(long));
+//    }
+//
+//    MandelMovie(threshold,
+//                max_iterations,
+//                center,
+//                initialscale,
+//                finalscale,
+//                framecount,
+//                resolution,
+//                output);
+//
+////    int* color_count_pointer = malloc(sizeof(int));
+////
+////    int** colormap;
+////    colormap = FileToColorMap(colorfile, color_count_pointer);
+////    P3colorpalette(colorfile, int width, int heightpercolor, char* outputfile);
+////    uint8_t** res;
+////    for(int i =0; i< framecount;i++){
+////        for (int j=0; j<(2*resolution+1)*(2*resolution+1);j++){
+////            res[i][j] = colormap
+////        }
+////    }
+//    for (int i=0; i<framecount;i++){
+//        char a[35];
+//        sprintf(a,"%s/frame%05d.ppm", argv[9], i);
+//        FILE *out = fopen(a, "w");
+//        fprintf(out, "P6 %d %d 255\n", len, len);
+//        for(int m=0; m<len*len; m++){
+//            if(output[i][m] == 0){
+//                fprintf(out, "%c%c%c", 0, 0, 0);
+//            } else {
+//                int index = ((int)output[i][m]-1) % (*colorcount);
+//                fprintf(out, "%c%c%c", colormap[index][0], colormap[index][1], colormap[index][2]);
+//            }
+//        }
+//    }
+//
+//
+//    for (int i=0;i<framecount;i++){
+//        free(output[i]);
+//    }
+//    for (int i=0; i<(*colorcount);i++){
+//        free(colormap[i]);
+//    }
+//
+//    free(output);
+//    free(colormap);
+//    free(colorcount);
+//    free(center);
+//    //YOUR CODE HERE
+//
+//
+//
+//
 //    //STEP 2: Run MandelMovie on the correct arguments.
 //    /*
 //    MandelMovie requires an output array, so make sure you allocate the proper amount of space.
@@ -395,33 +303,8 @@ int main(int argc, char* argv[])
 //    */
 //
 //    //YOUR CODE HERE
-//    int len = 2 * resolution + 1;
-//    long **output;
-//    output = (long**)malloc(framecount * sizeof(long*));
-//    if(output == NULL){
-//        printf("Unable to allocate **output\n");
-//        return 1;
-//    }
-//    for(int i=0; i<framecount; i++){
-//        output[i] = (long*)malloc(sizeof(long) * len * len);
-//        if(output[i] == NULL){
-//            printf("Unable to malloc \n");
-//            return 1;
-//        }
-//    }
 //
-//    MandelMovie(threshold, max_iterations, center, initialscale, finalscale, framecount, resolution, output);
 //
-//    /*
-//    printf("**************************************\n");
-//    for(int i=0; i<framecount; i++){
-//        for(int j=0; j<len*len; j++){
-//            printf("%ld ", output[i][j]);
-//        }
-//        printf("\n");
-//    }
-//    printf("**************************************\n\n");
-//    */
 //
 //    //STEP 3: Output the results of MandelMovie to .ppm files.
 //    /*
@@ -432,24 +315,8 @@ int main(int argc, char* argv[])
 //    */
 //
 //    //YOUR CODE HERE
-//    //argv[9] is the output_foler
-//    // colormap, colorcount, output, framecount.
-//    for(int i=0; i<framecount; i++){
-//        char a[35];
-//        sprintf(a, "%s/frame%05d.ppm", argv[9], i); 	//低级错误 把i写成了framecount
-//        FILE *out = fopen(a, "w");
-//        fprintf(out, "P6 %d %d 255\n", len, len); 		//忘了加\n
-//        for(int m=0; m<len*len; m++){
-//            if(output[i][m] == 0){ 						//haha, lowest error 低级错误 把i写成了framecount
-//                fprintf(out, "%c%c%c", 0, 0, 0);
-//            } else {
-//                int index = ((int)output[i][m]-1) % (*colorcount);
-//                fprintf(out, "%c%c%c", colormap[index][0], colormap[index][1], colormap[index][2]);
-//            }
 //
-//        }
-//        fclose(out);
-//    }
+//
 //
 //
 //    //STEP 4: Free all allocated memory
@@ -457,17 +324,153 @@ int main(int argc, char* argv[])
 //    Make sure there's no memory leak.
 //    */
 //    //YOUR CODE HERE
-//    for(int i=0; i<framecount; i++){
-//        free(output[i]);
-//    }
-//    free(output);
 //
-//    for(int i=0; i<(*colorcount); i++){
-//        free(colormap[i]);
-//    }
-//    free(colormap);
-//    free(colorcount);
 //
-//    free(center);
+//
+//
+//
 //    return 0;
 //}
+
+
+
+
+int main(int argc, char* argv[])
+{
+    //Tips on how to get started on main function:
+    //MandelFrame also follows a similar sequence of steps; it may be useful to reference that.
+    //Mayke you complete the steps below in order.
+
+    //STEP 1: Convert command line inputs to local variables, and ensure that inputs are valid.
+    /*
+    Check the spec for examples of invalid inputs.
+    Remember to use your solution to B.1.1 to process colorfile.
+    */
+
+    //YOUR CODE HERE
+    if(argc != 11) {
+        printf("%s: Wrong number of arguments, expecting 7\n", argv[0]);
+        printUsage(argv);
+        return 1;
+    }
+    double threshold,initialscale, finalscale;
+    int framecount;
+    ComplexNumber* center;
+    long max_iterations, resolution;
+
+    threshold = atof(argv[1]);
+    max_iterations = (long)atoi(argv[2]);
+    center = newComplexNumber(atof(argv[3]), atof(argv[4]));
+    initialscale = atof(argv[5]);
+    finalscale = atof(argv[6]);
+    framecount = (int)atoi(argv[7]);
+    resolution = (long)atoi(argv[8]);
+
+    if(threshold <= 0 || initialscale <= 0 || finalscale <= 0 || max_iterations <= 0){
+        printf("The threshold, initscale, finalscale, max_iterations must be > 0\n");
+        printUsage(argv);
+        return 1;
+    }
+    if(resolution < 0){
+        printf("The resolution must be >= 0\n");
+        printUsage(argv);
+        return 1;
+    }
+    if(framecount > 10000 || framecount <= 0){
+        printf("The framecount must in the range of (0, 10000)\n");
+        printUsage(argv);
+        return 1;
+    }
+    if(framecount == 1 && initialscale != finalscale){
+        printf("The framecount is not 1\n");
+        printUsage(argv);
+        return 1;
+    }
+    //get the colormap and color num
+    int *colorcount = (int*)malloc(sizeof(int));
+    int **colormap = FileToColorMap(argv[10], colorcount);
+
+
+    //STEP 2: Run MandelMovie on the correct arguments.
+    /*
+    MandelMovie requires an output array, so make sure you allocate the proper amount of space.
+    If allocation fails, free all the space you have already allocated (including colormap), then return with exit code 1.
+    */
+
+    //YOUR CODE HERE
+    int len = 2 * resolution + 1;
+    long **output;
+    output = (long**)malloc(framecount * sizeof(long*));
+    if(output == NULL){
+        printf("Unable to allocate **output\n");
+        return 1;
+    }
+    for(int i=0; i<framecount; i++){
+        output[i] = (long*)malloc(sizeof(long) * len * len);
+        if(output[i] == NULL){
+            printf("Unable to malloc \n");
+            return 1;
+        }
+    }
+
+    MandelMovie(threshold, max_iterations, center, initialscale, finalscale, framecount, resolution, output);
+
+    /*
+    printf("**************************************\n");
+    for(int i=0; i<framecount; i++){
+        for(int j=0; j<len*len; j++){
+            printf("%ld ", output[i][j]);
+        }
+        printf("\n");
+    }
+    printf("**************************************\n\n");
+    */
+
+    //STEP 3: Output the results of MandelMovie to .ppm files.
+    /*
+    Convert from iteration count to colors, and output the results into output files.
+    Use what we showed you in Part B.1.2, create a seqeunce of ppm files in the output folder.
+    Feel free to create your own helper function to complete this step.
+    As a reminder, we are using P6 format, not P3.
+    */
+
+    //YOUR CODE HERE
+    //argv[9] is the output_foler
+    // colormap, colorcount, output, framecount.
+    for(int i=0; i<framecount; i++){
+        char a[35];
+        sprintf(a, "%s/frame%05d.ppm", argv[9], i); 	//低级错误 把i写成了framecount
+        FILE *out = fopen(a, "w");
+        fprintf(out, "P6 %d %d 255\n", len, len); 		//忘了加\n
+        for(int m=0; m<len*len; m++){
+            if(output[i][m] == 0){ 						//haha, lowest error 低级错误 把i写成了framecount
+                fprintf(out, "%c%c%c", 0, 0, 0);
+            } else {
+                int index = ((int)output[i][m]-1) % (*colorcount);
+                fprintf(out, "%c%c%c", colormap[index][0], colormap[index][1], colormap[index][2]);
+            }
+
+        }
+        fclose(out);
+    }
+
+
+    //STEP 4: Free all allocated memory
+    /*
+    Make sure there's no memory leak.
+    */
+    //YOUR CODE HERE
+    for(int i=0; i<framecount; i++){
+        free(output[i]);
+    }
+    free(output);
+
+    for(int i=0; i<(*colorcount); i++){
+        free(colormap[i]);
+    }
+    free(colormap);
+    free(colorcount);
+
+    free(center);
+    return 0;
+}
