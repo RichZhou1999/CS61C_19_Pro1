@@ -43,18 +43,30 @@ long MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold
 //*/
 void Mandelbrot(double threshold, long max_iterations, ComplexNumber* center, double scale, long resolution, long * output){
     int size = 2 * resolution + 1;
-    u_int64_t temp_result;
-//    ComplexNumber* point = malloc(sizeof(ComplexNumber));
-    for(int i = Re(center) - scale; i <= Re(center) + scale; i += scale/resolution ){
-        for (int j = Im(center) - scale; j <= Im(center) + scale; j += scale/resolution ){
-            ComplexNumber* point = newComplexNumber(i, j );
+    long temp_result;
+
+    for(int i=0; i < size; i++){
+        for(int j=0; j < size; j++){
+            double re = Re(center) - scale + i * scale/resolution;
+            double im = IM(center) + scale - j* scale/resolution;
+            ComplexNumber* point = newComplexNumber(re, im );
             temp_result = MandelbrotIterations(max_iterations, point, threshold);
             output[i*size + j] =  temp_result;
             free(point);
         }
     }
 
-    //YOUR CODE HERE
+//    ComplexNumber* point = malloc(sizeof(ComplexNumber));
+//    for(int i = Re(center) - scale; i <= Re(center) + scale; i += scale/resolution ){
+//        for (int j = Im(center) - scale; j <= Im(center) + scale; j += scale/resolution ){
+//            ComplexNumber* point = newComplexNumber(i, j );
+//            temp_result = MandelbrotIterations(max_iterations, point, threshold);
+//            output[i*size + j] =  temp_result;
+//            free(point);
+//        }
+//    }
+//
+//    //YOUR CODE HERE
 }
 
 
