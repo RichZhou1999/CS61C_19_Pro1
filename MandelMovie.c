@@ -290,6 +290,7 @@ int main(int argc, char* argv[])
                 fprintf(out, "%c%c%c", colormap[index][0], colormap[index][1], colormap[index][2]);
             }
         }
+        fclose(out);
     }
 
 
