@@ -15,26 +15,26 @@
 This function returns the number of iterations before the initial point >= the threshold.
 If the threshold is not exceeded after maxiters, the function returns 0.
 */
-//long MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold)
-//{
-////    double real_component = point -> real;
-////    double imaginary_component = point -> imaginary;
-//    ComplexNumber* node = newComplexNumber(0, 0 );
-//    for(int i = 0; i < maxiters; i++) {
-//        ComplexNumber* product_node = ComplexProduct(node, node);
-//        free(node);
-//        ComplexNumber* node = ComplexSum(product_node, point);
-//        free(product_node);
-//        if (ComplexAbs(node) > threshold) {
-//            free(node);
-//            return i;
-//        }
-//    }
-//    free(node);
-////    free(product_node);
-////    free(sum_node);
-//    return 0;
-//}
+long MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold)
+{
+//    double real_component = point -> real;
+//    double imaginary_component = point -> imaginary;
+    ComplexNumber* node = newComplexNumber(0, 0 );
+    for(int i = 0; i < maxiters; i++) {
+        ComplexNumber* product_node = ComplexProduct(node, node);
+        free(node);
+        ComplexNumber* node = ComplexSum(product_node, point);
+        free(product_node);
+        if (ComplexAbs(node) >= threshold) {
+            free(node);
+            return i;
+        }
+    }
+    free(node);
+//    free(product_node);
+//    free(sum_node);
+    return 0;
+}
 
 /*
 //This function calculates the Mandelbrot plot and stores the result in output.
@@ -60,26 +60,26 @@ void Mandelbrot(double threshold, long max_iterations, ComplexNumber* center, do
 
 
 
-long MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold)
-{
-    //YOUR CODE HERE
-    ComplexNumber *Z = newComplexNumber(0.0, 0.0);
-    ComplexNumber *C = point;
-    for(int i = 1; i <= maxiters; i++){
-        ComplexNumber *powZ = ComplexProduct(Z, Z);
-        free(Z);
-        Z = ComplexSum(powZ, C);
-        free(powZ);
-        if(ComplexAbs(Z) >= threshold){
-            free(Z);
-//            free(C);
-            return i;
-        }
-    }
-    free(Z);
-//    free(C);
-    return 0;
-}
+//long MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold)
+//{
+//    //YOUR CODE HERE
+//    ComplexNumber *Z = newComplexNumber(0.0, 0.0);
+//    ComplexNumber *C = point;
+//    for(int i = 1; i <= maxiters; i++){
+//        ComplexNumber *powZ = ComplexProduct(Z, Z);
+//        free(Z);
+//        Z = ComplexSum(powZ, C);
+//        free(powZ);
+//        if(ComplexAbs(Z) >= threshold){
+//            free(Z);
+////            free(C);
+//            return i;
+//        }
+//    }
+//    free(Z);
+////    free(C);
+//    return 0;
+//}
 
 /*
 This function calculates the Mandelbrot plot and stores the result in output.
