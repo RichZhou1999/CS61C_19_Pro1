@@ -38,7 +38,7 @@ If the threshold is not exceeded after maxiters, the function returns 0.
 //}
 
 
-u_int64_t MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold)
+u_int64_t MandelbrotIterations(u_int64_t maxiters, ComplexNumber * point, double threshold)
 {
     //YOUR CODE HERE
     ComplexNumber *Z = newComplexNumber(0.0, 0.0);
