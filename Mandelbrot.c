@@ -67,7 +67,7 @@ long MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold
 //    }
 //
 //    //YOUR CODE HERE
-}
+//}
 
 
 
