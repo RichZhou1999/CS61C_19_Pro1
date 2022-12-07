@@ -196,7 +196,7 @@ void MandelMovie(double threshold, u_int64_t max_iterations, ComplexNumber* cent
 
 int main(int argc, char* argv[])
 {
- tailored
+    //tailored
     //Tips on how to get started on main function:
     //MandelFrame also follows a similar sequence of steps; it may be useful to reference that.
     //Mayke you complete the steps below in order.
