@@ -72,12 +72,12 @@ long MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold
         free(powZ);
         if(ComplexAbs(Z) >= threshold){
             free(Z);
-            free(C);
+//            free(C);
             return i;
         }
     }
     free(Z);
-    free(C);
+//    free(C);
     return 0;
 }
 
