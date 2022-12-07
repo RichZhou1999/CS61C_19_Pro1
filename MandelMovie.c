@@ -98,12 +98,12 @@ int main(int argc, char* argv[])
     uint8_t** colormap;
     colormap = FileToColorMap(colorfile, color_count_pointer);
 //    P3colorpalette(colorfile, int width, int heightpercolor, char* outputfile);
-    uint8_t** res;
-    for(int i =0; i< framecount;i++){
-        for (int j=0; j<(2*resolution+1)*(2*resolution+1);j++){
+//    uint8_t** res;
+//    for(int i =0; i< framecount;i++){
+//        for (int j=0; j<(2*resolution+1)*(2*resolution+1);j++){
 //            res[i][j] = colormap
-        }
-    }
+//        }
+//    }
     int len = 2*resolution + 1
     for (int i=0;i<framecount;i++){
         char a[35];
