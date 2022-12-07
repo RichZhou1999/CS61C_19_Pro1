@@ -67,7 +67,9 @@ int main(int argc, char* argv[])
     double center_real = atof(argv[3]);
     double center_imaginary = atof(argv[4]);
     ComplexNumber* center;
+    ComplexNumber* center_point;
     center = newComplexNumber(center_real, center_imaginary);
+    center_point = center;
     double initialscale = atof(argv[5]);
     double finalscale = atof(argv[6]);
 
@@ -135,7 +137,7 @@ int main(int argc, char* argv[])
     free(output);
     free(colormap);
     free(color_count_pointer);
-    free(center);
+    free(center_point);
 	//YOUR CODE HERE
 
 
