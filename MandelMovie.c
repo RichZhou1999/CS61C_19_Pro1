@@ -130,6 +130,7 @@ int main(int argc, char* argv[])
     free(output);
     free(colormap);
     free(color_count_pointer);
+    free(center);
 	//YOUR CODE HERE 
 
 
