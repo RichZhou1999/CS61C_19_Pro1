@@ -253,10 +253,10 @@ int main(int argc, char* argv[])
                 resolution,
                 output);
 
-    int* color_count_pointer = malloc(sizeof(int));
-
-    int** colormap;
-    colormap = FileToColorMap(colorfile, color_count_pointer);
+//    int* color_count_pointer = malloc(sizeof(int));
+//
+//    int** colormap;
+//    colormap = FileToColorMap(colorfile, color_count_pointer);
 //    P3colorpalette(colorfile, int width, int heightpercolor, char* outputfile);
 //    uint8_t** res;
 //    for(int i =0; i< framecount;i++){
@@ -273,7 +273,7 @@ int main(int argc, char* argv[])
             if(output[i][m] == 0){
                 fprintf(out, "%c%c%c", 0, 0, 0);
             } else {
-                int index = ((int)output[i][m]-1) % (*color_count_pointer);
+                int index = ((int)output[i][m]-1) % (*colorcount);
                 fprintf(out, "%c%c%c", colormap[index][0], colormap[index][1], colormap[index][2]);
             }
         }
@@ -289,7 +289,7 @@ int main(int argc, char* argv[])
 
     free(output);
     free(colormap);
-    free(color_count_pointer);
+    free(colorcount);
     free(center);
     //YOUR CODE HERE
 
