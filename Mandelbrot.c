@@ -24,11 +24,12 @@ u_int64_t MandelbrotIterations(u_int64_t maxiters, ComplexNumber * point, double
         ComplexNumber* product_node = ComplexProduct(node, node);
         ComplexNumber* sum_node = ComplexSum(product_node, point);
         free(product_node);
-        free(sum_node);
         if (ComplexAbs(sum_node) > threshold) {
+            free(sum_node);
             free(node);
             return i;
         }
+        free(sum_node);
     }
     free(node);
 //    free(product_node);
