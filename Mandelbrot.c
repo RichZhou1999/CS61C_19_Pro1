@@ -15,7 +15,7 @@
 This function returns the number of iterations before the initial point >= the threshold.
 If the threshold is not exceeded after maxiters, the function returns 0.
 */
-u_int64_t MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold)
+long MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold)
 {
 //    double real_component = point -> real;
 //    double imaginary_component = point -> imaginary;
