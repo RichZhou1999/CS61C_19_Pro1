@@ -20,7 +20,7 @@ long MandelbrotIterations(long maxiters, ComplexNumber * point, double threshold
 //    double real_component = point -> real;
 //    double imaginary_component = point -> imaginary;
     ComplexNumber* node = newComplexNumber(0, 0 );
-    for(int i = 0; i < maxiters; i++) {
+    for(int i = 1; i < maxiters; i++) {
         ComplexNumber* product_node = ComplexProduct(node, node);
         free(node);
         ComplexNumber* node = ComplexSum(product_node, point);
