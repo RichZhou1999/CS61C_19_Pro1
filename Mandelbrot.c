@@ -48,7 +48,7 @@ void Mandelbrot(double threshold, long max_iterations, ComplexNumber* center, do
     for(int i=0; i < size; i++){
         for(int j=0; j < size; j++){
             double re = Re(center) - scale + i * scale/resolution;
-            double im = IM(center) + scale - j* scale/resolution;
+            double im = Im(center) + scale - j* scale/resolution;
             ComplexNumber* point = newComplexNumber(re, im );
             temp_result = MandelbrotIterations(max_iterations, point, threshold);
             output[i*size + j] =  temp_result;
