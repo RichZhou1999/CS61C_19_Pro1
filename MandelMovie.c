@@ -227,26 +227,18 @@ int main(int argc, char* argv[])
     framecount = (int)atoi(argv[7]);
     resolution = (long)atoi(argv[8]);
 
-    if(threshold <= 0 || initialscale <= 0 || finalscale <= 0 || max_iterations <= 0){
-        printf("The threshold, initscale, finalscale, max_iterations must be > 0\n");
-        printUsage(argv);
+//    if (finalscale < initialscale){
+//        return 1;
+//    }
+
+    if(framecount <= 0 || framecount > 10000 || resolution < 0 || threshold <0 || max_iterations < 0){
         return 1;
     }
-    if(resolution < 0){
-        printf("The resolution must be >= 0\n");
-        printUsage(argv);
-        return 1;
-    }
-    if(framecount > 10000 || framecount <= 0){
-        printf("The framecount must in the range of (0, 10000)\n");
-        printUsage(argv);
-        return 1;
-    }
+
     if(framecount == 1 && initialscale != finalscale){
-        printf("The framecount is not 1\n");
-        printUsage(argv);
         return 1;
     }
+
 
     char* output_folder = argv[9];
     char* colorfile = argv[10];
