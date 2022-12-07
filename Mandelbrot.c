@@ -108,7 +108,7 @@ void Mandelbrot(double threshold, long max_iterations, ComplexNumber* center, do
             double im = Im(center) - dis*(m-resolution);
             ComplexNumber *C = newComplexNumber(re, im);
             output[count++] = MandelbrotIterations(max_iterations, C, threshold);
-            //free(C);
+            free(C);
         }
     }
 }
