@@ -41,20 +41,34 @@ This function calculates the Mandelbrot plot and stores the result in output.
 The number of pixels in the image is resolution * 2 + 1 in one row/column. It's a square image.
 Scale is the distance between center and the top pixel in one dimension.
 */
-void Mandelbrot(double threshold, u_int64_t max_iterations, ComplexNumber* center, double scale, u_int64_t resolution, u_int64_t *output){
-    int size = 2 * resolution + 1;
-    u_int64_t temp_result;
-//    ComplexNumber* point = malloc(sizeof(ComplexNumber));
-    for(int i = Re(center) - scale; i <= Re(center) + scale; i += scale/resolution ){
-        for (int j = Im(center) - scale; j <= Im(center) + scale; j += scale/resolution ){
-            ComplexNumber* point = newComplexNumber(i, j );
-            temp_result = MandelbrotIterations(max_iterations, point, threshold);
-            output[i*size + j] =  temp_result;
-            free(point);
+//void Mandelbrot(double threshold, u_int64_t max_iterations, ComplexNumber* center, double scale, u_int64_t resolution, u_int64_t *output){
+//    int size = 2 * resolution + 1;
+//    u_int64_t temp_result;
+////    ComplexNumber* point = malloc(sizeof(ComplexNumber));
+//    for(int i = Re(center) - scale; i <= Re(center) + scale; i += scale/resolution ){
+//        for (int j = Im(center) - scale; j <= Im(center) + scale; j += scale/resolution ){
+//            ComplexNumber* point = newComplexNumber(i, j );
+//            temp_result = MandelbrotIterations(max_iterations, point, threshold);
+//            output[i*size + j] =  temp_result;
+//            free(point);
+//        }
+//    }
+//
+//    //YOUR CODE HERE
+//}
+
+void Mandelbrot(double threshold, long max_iterations, ComplexNumber* center, double scale, long resolution, long * output){
+    //YOUR CODE HERE
+    double dis = scale/resolution;
+    int len = resolution*2 + 1;
+    int count = 0;
+    for(int m = 0; m < len; m++){
+        for(int j = 0; j < len; j++){
+            double re = Re(center) + dis*(j-resolution);
+            double im = Im(center) - dis*(m-resolution);
+            ComplexNumber *C = newComplexNumber(re, im);
+            output[count++] = MandelbrotIterations(max_iterations, C, threshold);
+            free(C);
         }
     }
-
-    //YOUR CODE HERE
 }
-
-
