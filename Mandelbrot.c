@@ -15,49 +15,48 @@
 This function returns the number of iterations before the initial point >= the threshold.
 If the threshold is not exceeded after maxiters, the function returns 0.
 */
-//u_int64_t MandelbrotIterations(u_int64_t maxiters, ComplexNumber * point, double threshold)
-//{
-////    double real_component = point -> real;
-////    double imaginary_component = point -> imaginary;
-//    ComplexNumber* node = newComplexNumber(0, 0 );
-//    for(int i = 0; i < maxiters; i++) {
-//        ComplexNumber* product_node = ComplexProduct(node, node);
-//        ComplexNumber* sum_node = ComplexSum(product_node, point);
-//        free(product_node);
-//        if (ComplexAbs(sum_node) > threshold) {
-//            free(sum_node);
-//            free(node);
-//            return i;
-//        }
-//        free(sum_node);
-//    }
-//    free(node);
-////    free(product_node);
-////    free(sum_node);
-//    return 0;
-//}
-
-
 u_int64_t MandelbrotIterations(u_int64_t maxiters, ComplexNumber * point, double threshold)
 {
-    //YOUR CODE HERE
-    ComplexNumber *Z = newComplexNumber(0.0, 0.0);
-    ComplexNumber *C = point;
-    for(int i = 1; i <= maxiters; i++){
-        ComplexNumber *powZ = ComplexProduct(Z, Z);
-        free(Z);
-        Z = ComplexSum(powZ, C);
-        free(powZ);
-        if(ComplexAbs(Z) >= threshold){
-            free(Z);
-            free(C);
+//    double real_component = point -> real;
+//    double imaginary_component = point -> imaginary;
+    ComplexNumber* node = newComplexNumber(0, 0 );
+    for(int i = 0; i < maxiters; i++) {
+        ComplexNumber* product_node = ComplexProduct(node, node);
+        free(node);
+        ComplexNumber* node = ComplexSum(product_node, point);
+        free(product_node);
+        if (ComplexAbs(node) > threshold) {
+            free(node);
             return i;
         }
     }
-    free(Z);
-    free(C);
+    free(node);
+//    free(product_node);
+//    free(sum_node);
     return 0;
 }
+
+
+//u_int64_t MandelbrotIterations(u_int64_t maxiters, ComplexNumber * point, double threshold)
+//{
+//    //YOUR CODE HERE
+//    ComplexNumber *Z = newComplexNumber(0.0, 0.0);
+//    ComplexNumber *C = point;
+//    for(int i = 1; i <= maxiters; i++){
+//        ComplexNumber *powZ = ComplexProduct(Z, Z);
+//        free(Z);
+//        Z = ComplexSum(powZ, C);
+//        free(powZ);
+//        if(ComplexAbs(Z) >= threshold){
+//            free(Z);
+//            free(C);
+//            return i;
+//        }
+//    }
+//    free(Z);
+//    free(C);
+//    return 0;
+//}
 
 
 
@@ -75,7 +74,7 @@ void Mandelbrot(double threshold, u_int64_t max_iterations, ComplexNumber* cente
             ComplexNumber* point = newComplexNumber(i, j );
             temp_result = MandelbrotIterations(max_iterations, point, threshold);
             output[i*size + j] =  temp_result;
-//            free(point);
+            free(point);
         }
     }
 
