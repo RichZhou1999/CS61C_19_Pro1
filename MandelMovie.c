@@ -283,7 +283,7 @@ int main(int argc, char* argv[])
     for (int i=0;i<framecount;i++){
         free(output[i]);
     }
-    for (int i=0; i<(*color_count_pointer);i++){
+    for (int i=0; i<(*colorcount);i++){
         free(colormap[i]);
     }
 
