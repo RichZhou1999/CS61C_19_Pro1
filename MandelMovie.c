@@ -28,7 +28,7 @@ if initialscale=1024, finalscale=1, framecount=11, then your frames will have sc
 As another example, if initialscale=10, finalscale=0.01, framecount=5, then your frames will have scale 10, 10 * (0.01/10)^(1/4), 10 * (0.01/10)^(2/4), 10 * (0.01/10)^(3/4), 0.01 .
 */
 
-void MandelMovie(double threshold, u_int64_t max_iterations, ComplexNumber* center, double initialscale, double finalscale, int framecount, u_int64_t resolution, u_int64_t ** output){
+void MandelMovie(double threshold, u_int64_t max_iterations, ComplexNumber* center, double initialscale, double finalscale, int framecount, u_int64_t resolution, long ** output){
     if(framecount == 1) {
         Mandelbrot(threshold, max_iterations, center, initialscale, resolution, output[0]);
         return;
